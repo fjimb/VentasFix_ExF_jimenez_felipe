@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = User::orderBy('apellido')->paginate(10); //<- aplicamos ORM
+
+        return view('usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -20,15 +23,19 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('usuarios.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        User::create($request->validated());
+
+        return redirect()
+            ->route('usuarios.index')
+            ->with('ok', 'Usuario creado correctamente.');
     }
 
     /**
