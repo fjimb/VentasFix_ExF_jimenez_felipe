@@ -1,4 +1,4 @@
-{-- saque la navbar desde aqui: https://prebuiltui.com/components/navbar --}
+{{-- saque la navbar desde aqui: https://prebuiltui.com/components/navbar --}}
 
 <nav class="flex items-center border mx-4 max-md:w-full max-md:justify-between border-slate-700 px-6 py-4 rounded-full text-white text-sm">
     <a href="https://prebuiltui.com">

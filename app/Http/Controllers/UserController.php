@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -39,27 +40,29 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
     {
-        //
+        return view('usuarios.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $datos = $request-> validated();
+
+        if (empty($datos['password'])) {
+            unset($datos['password']);
+        }
+
+        $user->update($datos);
+
+        return redirect()
+            ->route('usuarios.index')
+            ->with('ok', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -67,6 +70,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()
+            ->route('usuarios.index')
+            ->with('ok', 'Usuario eliminado correctamente.');
     }
 }

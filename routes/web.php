@@ -4,9 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('index');
+    return redirect()->route(Auth::check() ? 'dashboard' : 'login');
 });
 
 /**
@@ -23,4 +24,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
 
-Route::resource('usuarios', UserController::class)->middleware('auth');
+Route::resource('usuarios', UserController::class)
+    ->except('show')
+    ->middleware('auth');

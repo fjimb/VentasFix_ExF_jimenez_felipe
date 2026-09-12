@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
+use App\Rules\RutValido;
 
 class StoreUserRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +25,17 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'rut' => [
+                'required',
+                'string',
+                new RutValido,
+                'unique:users,rut',
+            ],
+            'nombre' => ['required', 'string', 'max:225'],
+            'apellido' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
         ];
     }
+
 }
