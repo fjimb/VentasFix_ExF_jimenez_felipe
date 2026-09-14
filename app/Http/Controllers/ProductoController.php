@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
 use App\Models\Producto;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -12,7 +14,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::orderBy('nombre')->paginate(10);
+
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -20,15 +24,23 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('productos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductoRequest $request)
     {
-        //
+        $datos = $request->validated();
+
+        $datos['imagen'] = $request->file('imagen')->store('productos', 'public');
+
+        Producto::create($datos);
+
+        return redirect()
+            ->route('productos.index')
+            ->with('ok', 'Producto creado correctamente');
     }
 
     /**
@@ -36,7 +48,7 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return view('productos.show', compact('producto'));
     }
 
     /**
@@ -44,15 +56,29 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        return view('productos.edit', compact('producto'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(UpdateProductoRequest $request, Producto $producto)
     {
-        //
+        $datos = $request->validated();
+
+
+        if ($request->hasFile('imagen')) {
+            Storage::disk('public')->delete($producto->imagen);
+            $datos['imagen'] = $request->file('imagen')->store('productos', 'public');
+        }
+
+        $producto->update($datos);
+
+        return redirect()
+            ->route('productos.index')
+            ->with('ok', 'Producto actualizado correctamente.');
+
+        
     }
 
     /**
@@ -60,6 +86,12 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        Storage::disk('public')->delete($producto->imagen);
+
+        $producto->delete();
+
+        return redirect()
+            ->route('productos.index')
+            ->with('ok', 'Producto eliminado correctamente.');
     }
 }
