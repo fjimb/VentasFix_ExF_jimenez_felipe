@@ -6,6 +6,7 @@ use App\Rules\RutValido;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -35,9 +36,18 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
+                'ends_with:@ventasfix.cl',
                 Rule::unique('users', 'email')->ignore($usuario),
             ],
             'password' => ['nullable', 'confirmed', Password::min(8)->letters()->numbers()],
+        ];
+    }
+
+    #[Override]
+    public function messages(): array
+    {
+        return [
+            'email.ends_with' => 'El email debe pertenecer al dominio @ventasfix.cl',
         ];
     }
 }

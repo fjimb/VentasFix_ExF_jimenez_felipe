@@ -1,6 +1,6 @@
 @extends('layout')
 
-@seoction('titulo', 'Editar usuario')
+@section('titulo', 'Editar usuario')
 
 @section('contenido')
 

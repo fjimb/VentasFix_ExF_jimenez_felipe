@@ -65,6 +65,11 @@ class UserController extends Controller
             ->with('ok', 'Usuario actualizado correctamente.');
     }
 
+    public function show(User $user)
+    {
+        return view('usuario.show', compact('user'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */

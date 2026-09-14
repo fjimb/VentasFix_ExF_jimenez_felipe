@@ -25,5 +25,4 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth');
 
 Route::resource('usuarios', UserController::class)
-    ->except('show')
     ->middleware('auth');

@@ -1,11 +1,11 @@
 @extends('layout')
 
-@section('titulo', 'usuarios')
+@section('titulo', 'Usuarios')
 
 @section('contenido')
 
 <div class="mb-4 flex items-center justify-between">
-    <h1 class="text-2x1 font-bold">Usuarios</h1>
+    <h1 class="text-2xl font-bold">Usuarios</h1>
     <a href="{{ route('usuarios.create') }}" class="rounded bg-blue-600 px-4 py-2 text-white">Nuevo usuario</a>
 </div>
 
@@ -25,6 +25,9 @@
                 <td class="p-3">{{ $usuario->nombre }} {{ $usuario->apellido }}</td>
                 <td class="p-3">{{ $usuario->email}}</td>
                 <td class="p-3">
+
+                    <a href="{{ route('usuarios.show', $usuario) }}" class="text-gray-700">Ver</a>
+
                     <a href="{{ route('usuarios.edit', $usuario) }}" class="text-blue-600">Editar</a>
 
                     <form action="{{ route('usuarios.destroy', $usuario) }}" 
