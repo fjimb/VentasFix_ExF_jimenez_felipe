@@ -4,54 +4,37 @@
 
 @section('contenido')
 
-<div class="mb-4 flex items-center justify-between">
-    <h1 class="text-2xl font-bold">Clientes</h1>
-    <a href="{{ route('clientes.create') }}"
-       class="rounded bg-blue-600 px-4 py-2 text-white">Nuevo cliente</a>
-</div>
+    <x-molecule.page-header titulo="Clientes">
+        <x-slot:acciones>
+            <x-atom.button :href="route('clientes.create')">Nuevo cliente</x-atom.button>
+        </x-slot:acciones>
+    </x-molecule.page-header>
 
-<table class="w-full bg-white text-left">
-    <thead class="border-b">
-        <tr>
-            <th class="p-3">RUT empresa</th>
-            <th class="p-3">Razón social</th>
-            <th class="p-3">Rubro</th>
-            <th class="p-3">Contacto</th>
-            <th class="p-3">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
+    <x-organism.tabla :cabeceras="['RUT empresa', 'Razón social', 'Rubro', 'Contacto', 'Acciones']">
         @forelse ($clientes as $cliente)
-            <tr class="border-b">
-                <td class="p-3">{{ $cliente->rut_empresa }}</td>
-                <td class="p-3">{{ $cliente->razon_social }}</td>
-                <td class="p-3">{{ $cliente->rubro }}</td>
-                <td class="p-3">{{ $cliente->nombre_contacto }}</td>
-                <td class="p-3">
-                    <a href="{{ route('clientes.show', $cliente) }}" class="text-gray-700">Ver</a>
-                    <a href="{{ route('clientes.edit', $cliente) }}" class="text-blue-600">Editar</a>
-
-                    <form action="{{ route('clientes.destroy', $cliente) }}"
-                          method="POST" class="inline"
-                          onsubmit="return confirm('¿Eliminar este cliente?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600">Eliminar</button>
-                    </form>
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="celda">{{ $cliente->rut_empresa }}</td>
+                <td class="celda">{{ $cliente->razon_social }}</td>
+                <td class="celda">{{ $cliente->rubro }}</td>
+                <td class="celda">{{ $cliente->nombre_contacto }}</td>
+                <td class="celda">
+                    <x-molecule.acciones
+                        :show="route('clientes.show', $cliente)"
+                        :edit="route('clientes.edit', $cliente)"
+                        :destroy="route('clientes.destroy', $cliente)"
+                        confirmar="¿Eliminar este cliente?"
+                    />
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="5" class="p-6 text-center text-gray-500">
-                    No hay clientes registrados.
-                </td>
+                <td colspan="5" class="celda text-center text-slate-500">No hay clientes registrados.</td>
             </tr>
         @endforelse
-    </tbody>
-</table>
+    </x-organism.tabla>
 
-<div class="mt-4">
-    {{ $clientes->links() }}
-</div>
+    <div class="mt-4">
+        {{ $clientes->links() }}
+    </div>
 
 @endsection

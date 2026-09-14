@@ -27,6 +27,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth');
 
 Route::resource('usuarios', UserController::class)
+    ->parameters(['usuarios' => 'user'])
     ->middleware('auth');
 
 Route::resource('productos', ProductoController::class)

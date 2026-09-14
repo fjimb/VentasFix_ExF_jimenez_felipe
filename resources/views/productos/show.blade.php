@@ -4,54 +4,28 @@
 
 @section('contenido')
 
-<h1 class="mb-6 text-2xl font-bold">{{ $producto->nombre }}</h1>
+    <x-molecule.page-header :titulo="$producto->nombre">
+        <x-slot:acciones>
+            <x-atom.button :href="route('productos.edit', $producto)">Editar</x-atom.button>
+            <x-atom.button :href="route('productos.index')" variant="ghost">Volver</x-atom.button>
+        </x-slot:acciones>
+    </x-molecule.page-header>
 
-<div class="max-w-2xl rounded bg-white p-6 shadow">
+    <div class="mb-4">
+        <img src="{{ asset('storage/'.$producto->imagen) }}"
+             alt="{{ $producto->nombre }}"
+             class="h-48 w-48 rounded-lg border border-slate-200 object-cover dark:border-slate-800">
+    </div>
 
-    <img src="{{ asset('storage/'.$producto->imagen) }}"
-         alt="{{ $producto->nombre }}"
-         class="mb-6 h-48 w-48 rounded object-cover">
-
-    <dl class="space-y-3">
-        <div>
-            <dt class="text-sm text-gray-500">ID</dt>
-            <dd>{{ $producto->id }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">SKU</dt>
-            <dd>{{ $producto->sku }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Descripción corta</dt>
-            <dd>{{ $producto->descripcion_corta }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Descripción larga</dt>
-            <dd>{{ $producto->descripcion_larga }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Precio neto</dt>
-            <dd>${{ number_format($producto->precio_neto, 0, ',', '.') }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Precio de venta (IVA incluido)</dt>
-            <dd>${{ number_format($producto->precio_de_venta, 0, ',', '.') }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Stock actual</dt>
-            <dd>{{ $producto->stock_actual }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Stock mínimo / bajo / alto</dt>
-            <dd>{{ $producto->stock_minimo }} / {{ $producto->stock_bajo }} / {{ $producto->stock_alto }}</dd>
-        </div>
-    </dl>
-</div>
-
-<div class="mt-4">
-    <a href="{{ route('productos.edit', $producto) }}"
-       class="rounded bg-blue-600 px-4 py-2 text-white">Editar</a>
-    <a href="{{ route('productos.index') }}" class="ml-2">Volver</a>
-</div>
+    <x-organism.ficha>
+        <x-molecule.dato label="ID">{{ $producto->id }}</x-molecule.dato>
+        <x-molecule.dato label="SKU">{{ $producto->sku }}</x-molecule.dato>
+        <x-molecule.dato label="Descripción corta">{{ $producto->descripcion_corta }}</x-molecule.dato>
+        <x-molecule.dato label="Descripción larga">{{ $producto->descripcion_larga }}</x-molecule.dato>
+        <x-molecule.dato label="Precio neto">${{ number_format($producto->precio_neto, 0, ',', '.') }}</x-molecule.dato>
+        <x-molecule.dato label="Precio de venta (IVA incluido)">${{ number_format($producto->precio_de_venta, 0, ',', '.') }}</x-molecule.dato>
+        <x-molecule.dato label="Stock actual">{{ $producto->stock_actual }}</x-molecule.dato>
+        <x-molecule.dato label="Stock mínimo / bajo / alto">{{ $producto->stock_minimo }} / {{ $producto->stock_bajo }} / {{ $producto->stock_alto }}</x-molecule.dato>
+    </x-organism.ficha>
 
 @endsection

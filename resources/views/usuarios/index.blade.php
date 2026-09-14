@@ -4,53 +4,36 @@
 
 @section('contenido')
 
-<div class="mb-4 flex items-center justify-between">
-    <h1 class="text-2xl font-bold">Usuarios</h1>
-    <a href="{{ route('usuarios.create') }}" class="rounded bg-blue-600 px-4 py-2 text-white">Nuevo usuario</a>
-</div>
+    <x-molecule.page-header titulo="Usuarios">
+        <x-slot:acciones>
+            <x-atom.button :href="route('usuarios.create')">Nuevo usuario</x-atom.button>
+        </x-slot:acciones>
+    </x-molecule.page-header>
 
-<table class="w-full bg-white text-left">
-    <thead class="border-b">
-        <tr>
-            <th class="p-3">RUT</th>
-            <th class="p-3">Nombre</th>
-            <th class="p-3">Email</th>
-            <th class="p-3">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
+    <x-organism.tabla :cabeceras="['RUT', 'Nombre', 'Email', 'Acciones']">
         @forelse ($usuarios as $usuario)
-            <tr class="border-b">
-                <td class="p-3">{{ $usuario->rut }}</td>
-                <td class="p-3">{{ $usuario->nombre }} {{ $usuario->apellido }}</td>
-                <td class="p-3">{{ $usuario->email}}</td>
-                <td class="p-3">
-
-                    <a href="{{ route('usuarios.show', $usuario) }}" class="text-gray-700">Ver</a>
-
-                    <a href="{{ route('usuarios.edit', $usuario) }}" class="text-blue-600">Editar</a>
-
-                    <form action="{{ route('usuarios.destroy', $usuario) }}" 
-                            method="POST" class="inline"
-                            onsubmit="return confirm('¿Eliminar este usuario?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600">Eliminar</button>
-                    </form>
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="celda">{{ $usuario->rut }}</td>
+                <td class="celda">{{ $usuario->nombre }} {{ $usuario->apellido }}</td>
+                <td class="celda">{{ $usuario->email }}</td>
+                <td class="celda">
+                    <x-molecule.acciones
+                        :show="route('usuarios.show', $usuario)"
+                        :edit="route('usuarios.edit', $usuario)"
+                        :destroy="route('usuarios.destroy', $usuario)"
+                        confirmar="¿Eliminar este usuario?"
+                    />
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="p-6 text-center text-gray-500">
-                    No hay usuarios registrados.
-                </td>
+                <td colspan="4" class="celda text-center text-slate-500">No hay usuarios registrados.</td>
             </tr>
         @endforelse
-    </tbody>
-</table>
+    </x-organism.tabla>
 
-<div class="mt-4">
-    {{ $usuarios->links() }}
-</div>
+    <div class="mt-4">
+        {{ $usuarios->links() }}
+    </div>
 
 @endsection

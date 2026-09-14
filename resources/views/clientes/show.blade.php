@@ -4,49 +4,22 @@
 
 @section('contenido')
 
-<h1 class="mb-6 text-2xl font-bold">{{ $cliente->razon_social }}</h1>
+    <x-molecule.page-header :titulo="$cliente->razon_social">
+        <x-slot:acciones>
+            <x-atom.button :href="route('clientes.edit', $cliente)">Editar</x-atom.button>
+            <x-atom.button :href="route('clientes.index')" variant="ghost">Volver</x-atom.button>
+        </x-slot:acciones>
+    </x-molecule.page-header>
 
-<div class="max-w-lg rounded bg-white p-6 shadow">
-    <dl class="space-y-3">
-        <div>
-            <dt class="text-sm text-gray-500">ID</dt>
-            <dd>{{ $cliente->id }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">RUT empresa</dt>
-            <dd>{{ $cliente->rut_empresa }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Razón social</dt>
-            <dd>{{ $cliente->razon_social }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Rubro</dt>
-            <dd>{{ $cliente->rubro }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Teléfono</dt>
-            <dd>{{ $cliente->telefono }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Dirección</dt>
-            <dd>{{ $cliente->direccion }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Nombre del contacto</dt>
-            <dd>{{ $cliente->nombre_contacto }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Email del contacto</dt>
-            <dd>{{ $cliente->email_contacto }}</dd>
-        </div>
-    </dl>
-</div>
-
-<div class="mt-4">
-    <a href="{{ route('clientes.edit', $cliente) }}"
-       class="rounded bg-blue-600 px-4 py-2 text-white">Editar</a>
-    <a href="{{ route('clientes.index') }}" class="ml-2">Volver</a>
-</div>
+    <x-organism.ficha>
+        <x-molecule.dato label="ID">{{ $cliente->id }}</x-molecule.dato>
+        <x-molecule.dato label="RUT empresa">{{ $cliente->rut_empresa }}</x-molecule.dato>
+        <x-molecule.dato label="Razón social">{{ $cliente->razon_social }}</x-molecule.dato>
+        <x-molecule.dato label="Rubro">{{ $cliente->rubro }}</x-molecule.dato>
+        <x-molecule.dato label="Teléfono">{{ $cliente->telefono }}</x-molecule.dato>
+        <x-molecule.dato label="Dirección">{{ $cliente->direccion }}</x-molecule.dato>
+        <x-molecule.dato label="Nombre del contacto">{{ $cliente->nombre_contacto }}</x-molecule.dato>
+        <x-molecule.dato label="Email del contacto">{{ $cliente->email_contacto }}</x-molecule.dato>
+    </x-organism.ficha>
 
 @endsection

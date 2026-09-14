@@ -4,58 +4,15 @@
 
 @section('contenido')
 
-<h1 class="mb-4 text-2x1 font-bold">Nuevo usuario</h1>
+    <x-molecule.page-header titulo="Nuevo usuario" />
 
-<form action="{{ route('usuarios.store') }}" method="POST" class="max-w-lg">
-    @csrf
-
-    <div class="mb-4">
-        <label for="rut" class="block mb-1">RUT</label>
-        <input type="text" name="rut" id="rut" value="{{ old('rut') }}" class="w-full rounded border p-2">
-        @error('rut')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="nombre" class="block mb-1">Nombre</label>
-        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" class="w-full rounded border p-2">
-        @error('nombre')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="apellido" class="block mb-1">Apellido</label>
-        <input type="text" name="apellido" id="apellido" value="{{ old('apellido') }}" class="w-full rounded border p-2">
-        @error('apellido')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-        
-    <div>
-        <label for="email" class="block mb-1">Email</label>
-        <input type="text" name="email" id="email" value="{{ old('email') }}" class="w-full rounded border p-2">
-        @error('email')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div>
-        <label for="password" class="block mb-1">Contraseña</label>
-        <input type="password" name="password" id="password" class="w-full rounded border p-2">
-        @error('password')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div>
-        <label for="password_confirmation" class="block mb-1">Confirmar Contraseña</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" class="w-full rounded border p-2">
-    </div>
-
-    <button type="submit" class="rounded bg-blue-600 px-4 py-2 text-white">Guardar</button>
-    <a href="{{ route('usuarios.index') }}" class="ml-2">Cancelar</a>
-</form>
+    <x-organism.formulario :action="route('usuarios.store')" :cancelar="route('usuarios.index')">
+        <x-molecule.campo name="rut" label="RUT" required />
+        <x-molecule.campo name="nombre" label="Nombre" required />
+        <x-molecule.campo name="apellido" label="Apellido" required />
+        <x-molecule.campo name="email" label="Email" type="email" required />
+        <x-molecule.campo name="password" label="Contraseña" type="password" required />
+        <x-molecule.campo name="password_confirmation" label="Confirmar contraseña" type="password" />
+    </x-organism.formulario>
 
 @endsection

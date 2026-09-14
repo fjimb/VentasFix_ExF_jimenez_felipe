@@ -6,4 +6,19 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Paleta sobria del backoffice (acento inspirado en ventasfix: #12507f). */
+    --color-brand-50: #eaf1f8;
+    --color-brand-100: #d3e2f0;
+    --color-brand-200: #a9c6e0;
+    --color-brand-500: #1a6aa8;
+    --color-brand-600: #12507f;
+    --color-brand-700: #0e4069;
+}
+
+@layer components {
+    /* Celda de tabla con padding consistente (ver <x-organism.tabla>). */
+    .celda {
+        @apply px-4 py-3 align-middle;
+    }
 }

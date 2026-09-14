@@ -4,43 +4,20 @@
 
 @section('contenido')
 
-<h1 class="mb-6 text-2xl font-bold">
-    {{ $user->nombre }} {{ $user->apellido }}
-</h1>
+    <x-molecule.page-header :titulo="$user->nombre . ' ' . $user->apellido">
+        <x-slot:acciones>
+            <x-atom.button :href="route('usuarios.edit', $user)">Editar</x-atom.button>
+            <x-atom.button :href="route('usuarios.index')" variant="ghost">Volver</x-atom.button>
+        </x-slot:acciones>
+    </x-molecule.page-header>
 
-<div class="max-w-lg rounded bg-white p-6 shadow">
-    <dl class="space-y-3">
-        <div>
-            <dt class="text-sm text-gray-500">ID</dt>
-            <dd>{{ $user->id }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">RUT</dt>
-            <dd>{{ $user->rut }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Nombre</dt>
-            <dd>{{ $user->nombre }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Apellido</dt>
-            <dd>{{ $user->apellido }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Email</dt>
-            <dd>{{ $user->email }}</dd>
-        </div>
-        <div>
-            <dt class="text-sm text-gray-500">Fecha de creación</dt>
-            <dd>{{ $user->created_at->format('d/m/Y H:i') }}</dd>
-        </div>
-    </dl>
-</div>
-
-<div class="mt-4">
-    <a href="{{ route('usuarios.edit', $user) }}"
-       class="rounded bg-blue-600 px-4 py-2 text-white">Editar</a>
-    <a href="{{ route('usuarios.index') }}" class="ml-2">Volver</a>
-</div>
+    <x-organism.ficha>
+        <x-molecule.dato label="ID">{{ $user->id }}</x-molecule.dato>
+        <x-molecule.dato label="RUT">{{ $user->rut }}</x-molecule.dato>
+        <x-molecule.dato label="Nombre">{{ $user->nombre }}</x-molecule.dato>
+        <x-molecule.dato label="Apellido">{{ $user->apellido }}</x-molecule.dato>
+        <x-molecule.dato label="Email">{{ $user->email }}</x-molecule.dato>
+        <x-molecule.dato label="Fecha de creación">{{ $user->created_at->format('d/m/Y H:i') }}</x-molecule.dato>
+    </x-organism.ficha>
 
 @endsection
