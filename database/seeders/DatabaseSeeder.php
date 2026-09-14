@@ -15,11 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Usuario administrador por defecto para iniciar sesión.
+        // El email debe pertenecer al dominio @ventasfix.cl y la contraseña
+        // se cifra automáticamente (cast 'hashed' en el modelo User).
+        User::firstOrCreate(
+            ['email' => 'felipe@ventasfix.cl'],
+            [
+                'rut' => '12.345.678-5',
+                'nombre' => 'Felipe',
+                'apellido' => 'Jiménez',
+                'password' => 'password123',
+            ]
+        );
     }
 }
