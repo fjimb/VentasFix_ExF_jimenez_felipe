@@ -23,10 +23,16 @@ class UpdateClienteRequest extends FormRequest
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'rut_empresa' => ['required', 'string', new RutValido,
+{
+    return [
+        'rut_empresa' => ['required', 'string', new RutValido,
             Rule::unique('clientes', 'rut_empresa')->ignore($this->route('cliente'))],
-        ];
-    }
+        'rubro' => ['required', 'string', 'max:255'],
+        'razon_social' => ['required', 'string', 'max:255'],
+        'telefono' => ['required', 'string', 'max:20'],
+        'direccion' => ['required', 'string', 'max:255'],
+        'nombre_contacto' => ['required', 'string', 'max:255'],
+        'email_contacto' => ['required', 'email', 'max:255'],
+    ];
+}
 }
