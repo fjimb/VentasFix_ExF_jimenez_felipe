@@ -6,6 +6,7 @@
             <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600">Dashboard</a>
             <a href="{{ route('usuarios.index') }}" class="text-gray-700 hover:text-blue-600">Usuarios</a>
             <a href="{{ route('productos.index') }}" class="text-gray-700 hover:text-blue-600">Productos</a>
+            <a href="{{ route('clientes.index') }}" class="text-gray-700 hover:text-blue-600">Clientes</a>
         </div>
 
         <div class="flex items-center gap-4">
